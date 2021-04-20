@@ -2,7 +2,7 @@
 
 As announced recently on the [Cypress blog](https://www.cypress.io/blog/2021/04/06/introducing-the-cypress-component-test-runner/), Cypress 7.0 comes with a dedicated component testing runner. Most users will opt for the battle tested [webpack dev server](https://www.cypress.io/blog/2021/04/06/cypress-component-testing-react/). Some users like to be on the bleeding edge, though, and for that we also have an experimental ES modules dev server powered [Vite](https://vitejs.dev/).
 
-This article will show you how to set up Cypress and Vite.
+This article will show you how to set up Cypress and Vite. You can find the [source code here](https://github.com/lmiller1990/cypress-react-vite-demo).
 
 ## Creating a React Project
 
@@ -92,4 +92,4 @@ Sometimes you just want to run all the tests without seeing them rendering. This
     ✔  All specs passed!       114ms        1        1        -        -        -
 ```
 
-You can find the source code for this demo here.
+You can find the [source code here](https://github.com/lmiller1990/cypress-react-vite-demo).
