@@ -1,46 +1,55 @@
-# Getting Started with Create React App
+## Testing React with Cypress and Vite
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+As announced recently on the [Cypress blog](https://www.cypress.io/blog/2021/04/06/introducing-the-cypress-component-test-runner/), Cypress 7.0 comes with a dedicated component testing runner. Most users will opt for the battle tested [webpack dev server](https://www.cypress.io/blog/2021/04/06/cypress-component-testing-react/). Some users like to be on the bleeding edge, though, and for that we also have an experimental ES modules dev server powered [Vite](https://vitejs.dev/).
 
-## Available Scripts
+This article will show you how to set up Cypress and Vite.
 
-In the project directory, you can run:
+## Creating a React Project
 
-### `yarn start`
+The easiest way to get started is by scaffolding a new project using Create React App. Let's do so, and include TypeScript for good measure:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```sh
+yarn create react-app react-cypress-vite --template typescript
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Next we need a few dependencies. Those are Cypress, it's React adapter, and the Vite Dev Server:
 
-### `yarn test`
+```sh
+yarn add cypress @cypress/react @cypress/vite-dev-server vite --dev
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Next we need a little bit of configuration. Since the Cypress component testing runner is dev server agnostic, we need to tell it to use Vite. Create `cypress/plugins/index.js` and add the following:
 
-### `yarn build`
+```js
+const { startDevServer } = require('@cypress/vite-dev-server')
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+module.exports = (on, config) => {
+  on('dev-server:start', (options) => startDevServer({ options }))
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+  return config
+}
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Finally, we need to tell Cypress where to find our tests and components. I'm going to go with the default that Create React App ships with: components and tests in `src`, test files ending with `.test.tsx` or `.spec.tsx`.
 
-### `yarn eject`
+```json
+{
+  "testFiles": "**/*{test,spec}.{ts,tsx}",
+  "componentFolder": "src"
+}
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Finally, let's update the default test. Create React App ships with [Testing Library](https://testing-library.com/). While it is possible to use Testing Library with Cypress, I'm going to use the default Cypress driver, which has a slightly more ergonomic API - no need to explicitly `await` DOM updates, for example. 
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The default test written using Cypress looks like this:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```tsx
+import React from 'react';
+import { mount } from '@cypress/react';
+import App from './App';
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+it('renders learn react link', () => {
+  mount(<App />);
+  cy.get('a').contains('Learn React');
+});
+```

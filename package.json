@@ -39,5 +39,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@cypress/react": "^5.3.3",
+    "@cypress/vite-dev-server": "^1.2.2",
+    "cypress": "^7.1.0",
+    "vite": "^2.2.1"
   }
 }
