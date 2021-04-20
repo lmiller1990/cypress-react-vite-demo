@@ -12,11 +12,19 @@ The easiest way to get started is by scaffolding a new project using Create Reac
 yarn create react-app react-cypress-vite --template typescript
 ```
 
+That's all it takes to create the initial React project.
+
+## Install Cypress
+
 Next we need a few dependencies. Those are Cypress, it's React adapter, and the Vite Dev Server:
 
 ```sh
 yarn add cypress @cypress/react @cypress/vite-dev-server vite --dev
 ```
+
+Now we have a project and the correct dependencies, we need to do a tiny bit of configuration.
+
+## Configuring Cypress and Vite
 
 Next we need a little bit of configuration. Since the Cypress component testing runner is dev server agnostic, we need to tell it to use Vite. Create `cypress/plugins/index.js` and add the following:
 
@@ -39,7 +47,9 @@ Finally, we need to tell Cypress where to find our tests and components. I'm goi
 }
 ```
 
-Finally, let's update the default test. Create React App ships with [Testing Library](https://testing-library.com/). While it is possible to use Testing Library with Cypress, I'm going to use the default Cypress driver, which has a slightly more ergonomic API - no need to explicitly `await` DOM updates, for example. 
+## Writing a Test with Cypress
+
+Finally, let's update the default test. Create React App ships with [Testing Library](https://testing-library.com/). While it is possible to use Testing Library selector and assertion syntax with Cypress, I'm going to use the default Cypress driver, which has a slightly more ergonomic API - no need to explicitly `await` DOM updates, for example. 
 
 The default test written using Cypress looks like this:
 
@@ -53,3 +63,33 @@ it('renders learn react link', () => {
   cy.get('a').contains('Learn React');
 });
 ```
+
+You can run the test in two ways.
+
+## Interactive Mode
+
+The main way you interact with Cypress is via interactive mode. This let's you see the component and how it behaves as you update the component and tests. Run Cypress interactively with `yarn cypress open-ct`. It looks like this:
+
+![](./cypress-vite-1.png)
+
+Try changing the component or test - it's re-executed almost immediately. Vite is fast!
+
+## Run Mode
+
+Sometimes you just want to run all the tests without seeing them rendering. This is especially useful in a CI environment. You can do this using `yarn cypress run-ct`, which runs the tests in a headless browser by default, printing the results to the terminal:
+
+
+```sh
+===================================================================================
+
+  (Run Finished)
+
+
+       Spec                             Tests  Passing  Failing  Pending  Skipped
+  ┌───────────────────────────────────────────────────────────────────────────────┐
+  │ ✔  App.test.tsx            114ms        1        1        -        -        - │
+  └───────────────────────────────────────────────────────────────────────────────┘
+    ✔  All specs passed!       114ms        1        1        -        -        -
+```
+
+You can find the source code for this demo here.
