@@ -80,16 +80,16 @@ Sometimes you just want to run all the tests without seeing them rendering. This
 
 
 ```sh
-===================================================================================
+=======================================================================
 
   (Run Finished)
 
 
-       Spec                             Tests  Passing  Failing  Pending  Skipped
-  ┌───────────────────────────────────────────────────────────────────────────────┐
-  │ ✔  App.test.tsx            114ms        1        1        -        -        - │
-  └───────────────────────────────────────────────────────────────────────────────┘
-    ✔  All specs passed!       114ms        1        1        -        -        -
+       Spec                 Tests  Passing  Failing  Pending  Skipped
+  ┌───────────────────────────────────────────────────────────────────┐
+  │ ✔  App.test.tsx  114ms   1      1        -        -        -      │
+  └───────────────────────────────────────────────────────────────────┘
+    ✔  All passed!   114ms   1      1        -        -        -
 ```
 
 You can find the [source code here](https://github.com/lmiller1990/cypress-react-vite-demo).
