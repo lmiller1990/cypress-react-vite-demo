@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "types": [
+      "cypress",
+      "@testing-library/cypress"
+    ],
     "target": "es5",
     "lib": [
       "dom",

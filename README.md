@@ -92,4 +92,41 @@ Sometimes you just want to run all the tests without seeing them rendering. This
     ✔  All passed!   114ms   1      1        -        -        -
 ```
 
-You can find the [source code here](https://github.com/lmiller1990/cypress-react-vite-demo).
+## Usage with Testing Library
+
+If you prefer to use the Testing Library API in your tests, but like the ideal of running in a real browser using Cypress, you can that using [Cypress Testing Library](https://github.com/testing-library/cypress-testing-library).
+
+To configure Testing Library with Cypress, add the following line to `cypress/support/comands.js`:
+
+```js
+import '@testing-library/cypress/add-commands'
+```
+
+TypeScript users should also add the Testing Library types in `tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "types": [
+      "cypress",
+      "@testing-library/cypress"
+    ]
+  }
+}
+```
+
+The example testing using Testing Library's Cypress integration looks like this:
+
+```jsx
+import React from 'react';
+import { mount } from '@cypress/react';
+import App from './App';
+
+it('renders learn react link', () => {
+  mount(<App />);
+  cy.findAllByText('Learn React').should('exist')
+});
+```
+
+You can find the [source code for this article here](https://github.com/lmiller1990/cypress-react-vite-demo).
+
