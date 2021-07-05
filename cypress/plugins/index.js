@@ -8,6 +8,12 @@ module.exports = (on, config) => {
       options,
       viteConfig: {
         clearScreen: false,
+        server: {
+          // Ignore coverage file changes
+          watch: {
+            ignored: 'coverage/**/*.*'
+          }
+        },
         plugins: [istanbul({})],
       },
     })
